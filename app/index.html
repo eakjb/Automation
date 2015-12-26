@@ -1,0 +1,123 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/materialize/bin/materialize.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/styles.css">
+    <!-- endbuild -->
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/materialize/bin/materialize.js"></script>
+    <!-- endbower -->
+    <script src="bower_components/socket.io-client/socket.io.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({app,.tmp}) scripts/main.js -->
+    <script src="scripts/main.js"></script>
+    <script src="scripts/app.js"></script>
+    <!-- endbuild -->
+</head>
+
+<body ng-app="com.eakjb.homeAutomation">
+<div class="navbar-fixed">
+    <nav class="orange">
+        <div class="nav-wrapper">
+            <a href="#!" class="brand-logo nav-brand-text">Dashboard</a>
+            <ul class="right hide-on-med-and-down">
+                <li><a href="#!" class="nav-link"><i class="nav-icon material-icons">dashboard</i></a></li>
+                <li><a href="#!" class="nav-link"><i class="nav-icon material-icons">android</i></a></li>
+            </ul>
+            <ul id="slide-out" class="side-nav">
+                <li><a href="#!">Dashboard</a></li>
+                <li><a href="#!">Android</a></li>
+            </ul>
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        </div>
+    </nav>
+</div>
+
+<div class="scrollable-area" ng-controller="NodeListController">
+
+    <div ng-hide="loaded" class="progress">
+        <div class="indeterminate"></div>
+    </div>
+
+    <div ng-show="loaded" class="row">
+
+        <div class="col s12 m6 l4" ng-repeat="node in nodes">
+            <div class="card-panel">
+                <h5 ng-bind="node.display_name||node.error.data"></h5>
+
+                <div ng-hide="node.loaded" class="progress">
+                    <div class="indeterminate"></div>
+                </div>
+
+                <table ng-show="loaded">
+                    <tr ng-repeat="output in node.outputs">
+                        <div>
+                            <td>
+                                <span ng-bind="output.display_name"></span>
+                            </td>
+                            <td>
+                                <div class="switch"
+                                     ng-if="output.type==='switch'">
+                                    <label>
+                                        <span ng-bind="output.states.off.display_name"></span>
+
+                                        <input type="checkbox"
+                                               ng-model="output.state.is_on"
+                                               ng-change="output._update('is_on')">
+                                        <span class="lever"></span>
+
+                                        <span ng-bind="output.states.on.display_name"></span>
+                                    </label>
+                                </div>
+
+                                <p class="range-field"
+                                   ng-if="output.type==='range'">
+                                    <input type="range" id="test5"
+                                           ng-min="{{output.states.min}}"
+                                           ng-max="{{output.states.max}}"/>
+                                </p>
+                            </td>
+                        </div>
+
+                    </tr>
+                    <tr ng-repeat="input in node.inputs">
+                        <td>
+                            <span ng-bind="input.display_name"></span>
+                        </td>
+                        <td class="center-align">
+                            <span class="left" ng-bind="input.min"></span>
+                            <span><span ng-bind="input.value"></span><span ng-bind="input.unit_abbreviation"></span></span>
+                            <span class="right" ng-bind="input.max"></span>
+
+                            <div class="progress lighten-4"
+                                 ng-class="(input.display_name.toLowerCase().indexOf('temperature')>=0)?'red':'blue'">>
+                                <div class="determinate"
+                                     ng-style="input._style"
+                                     ng-class="(input.display_name.toLowerCase().indexOf('temperature')>=0)?'red':'blue'"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
