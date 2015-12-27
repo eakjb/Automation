@@ -28,6 +28,8 @@ angular.module('com.eakjb.homeAutomation', ['ngResource'])
         });
 
         API.Node = $resource(API.HAL + 'api/v1/Nodes/:node_id');
+        API.Recipient = $resource(API.HAL + 'api/v1/Recipients/:recipient_id');
+
         API.nodes = API.Node.query();
         API.nodes.$promise.then(function (nodes) {
             angular.forEach(nodes, function (node) {
@@ -142,4 +144,10 @@ angular.module('com.eakjb.homeAutomation', ['ngResource'])
         };
         $scope.load();
 
+    }])
+    .controller('RecipientListController', ['$scope', 'API', function($scope,API) {
+        $scope.recipients = API.Recipient.query();
+        $scope.recipientUpdate = function (recipient) {
+            API.Recipient.save(recipient)
+        };
     }]);
