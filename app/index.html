@@ -100,7 +100,7 @@
                         <td>
                             <span ng-bind="input.display_name"></span>
                         </td>
-                        <td class="center-align">
+                        <td class="center-align" ng-if="input._type==='number'">
                             <span class="left" ng-bind="input.min"></span>
                             <span><span ng-bind="input.value"></span><span
                                     ng-bind="input.unit_abbreviation"></span></span>
@@ -112,6 +112,26 @@
                                      ng-style="input._style"
                                      ng-class="(input.display_name.toLowerCase().indexOf('temperature')>=0)?'red':'blue'"></div>
                             </div>
+                        </td>
+                        <td ng-if="input._type==='trackable'">
+                            <span ng-style="{color:input.connectionStatus.color}">{{input.connectionStatus.display_name}}</span>
+                            <br/>
+                            <span ng-if="input.lastCheckin">{{input.lastCheckin|date:'medium'}}</span>
+                            <span ng-if="!input.lastCheckin">Never</span>
+                            <br/>
+                            <span ng-if="input.network">{{input.network.SSID}}</span>
+                            <br/>
+                            <span ng-if="!input.network.location.type">{{input.network.location}}</span>
+                            <span ng-if="input.network.location.type&&input.network.location.type!=='address'"><pre>{{input.network.location}}</pre></span>
+                            <span ng-if="input.network.location.type==='address'">
+                                <span>{{input.network.location.street}}<br/>
+                                    {{input.network.location.city}}
+                                    {{input.network.location.state}}<br/>
+                                    {{input.network.location.zip}}</span>
+                            </span>
+                        </td>
+                        <td ng-if="input._type==='other'">
+                            <pre>{{input.value.display_name||input.value}}</pre>
                         </td>
                     </tr>
                 </table>

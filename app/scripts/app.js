@@ -24,7 +24,9 @@ angular.module('com.eakjb.homeAutomation', ['ngResource'])
 
         API.socket = io(API.HAL);
         API.socket.on('notification', function (data) {
-            attemptNotification(data);
+            if (!data.priority||data.priority>100) {
+                attemptNotification(data);
+            }
         });
 
         API.Node = $resource(API.HAL + 'api/v1/Nodes/:node_id');
@@ -114,9 +116,23 @@ angular.module('com.eakjb.homeAutomation', ['ngResource'])
                                 node.inputs.$promise.then(function (inputs) {
 
                                     angular.forEach(inputs, function (input) {
-                                        input._style = {
-                                            width: input.value / (input.max - input.min) * 100 + '%'
-                                        };
+
+                                        //Temperature calculations
+                                        if (input.value&&input.max) {
+                                            input._style = {
+                                                width: input.value / (input.max - input.min) * 100 + '%'
+                                            };
+
+                                            return input._type = 'number';
+                                        }
+
+                                        if (input.connectionStatus) {
+                                            return input._type = 'trackable';
+                                        }
+
+                                        return input._type = 'other';
+                                        
+                                        
                                     });
                                 });
                                 promises.push(node.inputs.$promise);
