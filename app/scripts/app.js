@@ -116,6 +116,9 @@ angular.module('com.eakjb.homeAutomation', ['ngResource'])
                                 node.inputs.$promise.then(function (inputs) {
 
                                     angular.forEach(inputs, function (input) {
+                                        input._show = !input._hidden;
+                                        
+                                        if (input._type) return;
 
                                         //Temperature calculations
                                         if (input.value&&input.max) {

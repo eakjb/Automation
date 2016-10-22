@@ -71,7 +71,7 @@
                             <td>
                                 <span ng-bind="output.display_name"></span>
                             </td>
-                            <td>
+                            <td class="td-value">
                                 <div class="switch"
                                      ng-if="output.type==='switch'">
                                     <label>
@@ -96,9 +96,10 @@
                         </div>
 
                     </tr>
-                    <tr ng-repeat="input in node.inputs">
+                    <tr ng-repeat="input in node.inputs | filter:{_show: true}">
                         <td>
-                            <span ng-bind="input.display_name"></span>
+                            <img ng-src="{{input.value.artwork}}" alt="No Album Art" ng-if="input.value.artwork">
+                            <span ng-bind="input.display_name" ng-if="!input.value.artwork"></span>
                         </td>
                         <td class="center-align" ng-if="input._type==='number'">
                             <span class="left" ng-bind="input.min"></span>
@@ -113,7 +114,7 @@
                                      ng-class="(input.display_name.toLowerCase().indexOf('temperature')>=0)?'red':'blue'"></div>
                             </div>
                         </td>
-                        <td ng-if="input._type==='trackable'">
+                        <td class="td-value" ng-if="input._type==='trackable'">
                             <span ng-style="{color:input.connectionStatus.color}">{{input.connectionStatus.display_name}}</span>
                             <br/>
                             <span ng-if="input.lastCheckin">{{input.lastCheckin|date:'medium'}}</span>
@@ -130,7 +131,21 @@
                                     {{input.network.location.zip}}</span>
                             </span>
                         </td>
-                        <td ng-if="input._type==='other'">
+                        <td class="td-value" ng-if="input._type==='track'">
+                            <div ng-if="input.value.title">
+                                <div class="track-metadata">
+                                    <span>{{input.value.title}}</span>
+                                    <br/>
+                                    <span>by {{input.value.artist}}</span>
+                                    <br/>
+                                    <span>{{input.value.album}}</span>
+                                </div>
+                            </div>
+                            <div ng-if="!input.value.title">
+                                <span>None</span>
+                            </div>
+                        </td>
+                        <td class="td-value" ng-if="input._type==='other'">
                             <pre>{{input.value.display_name||input.value}}</pre>
                         </td>
                     </tr>

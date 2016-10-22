@@ -1,48 +1,62 @@
 @font-face {
-  font-family: 'Material Icons';
-  font-style: normal;
-  font-weight: 400;
-  src: url(../font/material-design-icons/Material-Design-Icons.eot); /* For IE6-8 */
-  src: local('Material Icons'),
-  local('MaterialIcons-Regular'),
-  url(../font/material-design-icons/Material-Design-Icons.woff2) format('woff2'),
-  url(../font/material-design-icons/Material-Design-Icons.woff) format('woff'),
-  url(../font/material-design-icons/Material-Design-Icons.ttf) format('truetype')
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/material-design-icons/Material-Design-Icons.eot); /* For IE6-8 */
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url(../font/material-design-icons/Material-Design-Icons.woff2) format('woff2'),
+    url(../font/material-design-icons/Material-Design-Icons.woff) format('woff'),
+    url(../font/material-design-icons/Material-Design-Icons.ttf) format('truetype')
 }
 
 .material-icons {
-  font-family: 'Material Icons';
-  font-weight: normal;
-  font-style: normal;
-  font-size: 24px;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  word-wrap: normal;
-  text-rendering: auto;
-  -webkit-font-feature-settings: 'liga';
-  -webkit-font-smoothing: antialiased;
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    word-wrap: normal;
+    text-rendering: auto;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
 }
 
 /* Added by Jake Billings */
-body,html {
-  overflow: hidden;
-  height:100%;
+body, html {
+    overflow: hidden;
+    height: 100%;
 }
+
 .scrollable-area {
-  overflow: scroll;
-  height:calc(100% - 64px);
+    overflow: scroll;
+    height: calc(100% - 64px);
 }
+
 .nav-icon {
-  font-size: 4rem;
-  padding-top: 1px;
+    font-size: 4rem;
+    padding-top: 1px;
 }
+
 .nav-link {
-  height: 64px;
+    height: 64px;
 }
+
 @media only screen and (min-width: 992px) {
-  .nav-brand-text {
-    padding-left: 8px !important;
-  }
+    .nav-brand-text {
+        padding-left: 8px !important;
+    }
+}
+
+.td-value {
+    float: right
+}
+
+.track-metadata {
+    float: right;
+    /*padding-left: 10px;*/
+    padding-top: 15px;
 }
